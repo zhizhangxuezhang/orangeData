@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chuangshu.orange_data.dao.RecodeDao">
+
+    <resultMap id="BaseResultMap" type="com.chuangshu.orange_data.entity.Recode">
+        <!--@Table recode-->
+        <result property="idrecode" column="idrecode" jdbcType="INTEGER"/>
+        <result property="num" column="num" jdbcType="INTEGER"/>
+        <result property="mytime" column="mytime" jdbcType="TIMESTAMP"/>
+        <result property="port" column="port" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询指定时间的数量-->
+    <select id="queryByMyTime" resultType="integer" >
+        select
+          count(*)
+        from labview.recode
+        where mytime
+        between #{myTimeFirst} and #{myTimeLast}
+        and port = #{port}
+    </select>
+    <select id="queryByPort" resultMap="BaseResultMap">
+        select
+            idrecode,num,mytime,port
+        from labview.recode
+        where port = #{port}
+    </select>
+
+</mapper>
